@@ -1,49 +1,10 @@
-import UIKit
-
-var greeting = "Hello, playground"
-//encode a class can inherit traits from another class. This is called code inheritance. In practice, it's commonly referred to as sub classing.
-//Inheritance describes the sharing of traits between a parent and child class.
-//The parent class refers to the existing class, while the new class that inherits all properties and methods from the parent is called a child class.
-//In short, code inheritance is a process of subclassing a class from another class.
-
-class Vegetable {
-    var Color: String{
-            "green"
-    }
-    func sing () {
-        print("I am a vegetable")
-    }
-}
-
-class Brocolli: Vegetable {
-}
-
-class Spinach: Vegetable {
-}
-
-class Carrot: Vegetable {
-    override var Color: String {
-        "Orange"
-    }
-    
-    override func sing() {
-        super.sing()
-        print("and a carrot at that")
-    }
-}
-
-let brocolli = Brocolli()
-print("\(brocolli.Color)")
-
-let spinach = Spinach()
-print("\(spinach.Color)")
-
-let carrot = Carrot()
-print("\(carrot.Color)")
-
-brocolli.sing()
-spinach.sing()
-carrot.sing()
+//
+//  SecretFood.swift
+//  AdvancedLittleLemon
+//
+//  Created by Joseph Acquah on 2025-09-23.
+//
+import Foundation
 
 
 //In a subclass, you have implementation details like properties and methods of a base class.
@@ -102,10 +63,20 @@ class SecretFood {
     
     //Suppose you want the Chef class or classes defined in the same source file to have access to read the secret ingredients.
     //You can create a fileprivate method to read the secret ingredients
-    fileprivate func readSecretIngredients() {
-        print("Secret Ingredients")
-        print(secretIngredients)
-    }
+//    fileprivate func readSecretIngredients() {
+//        print("Secret Ingredients")
+//        print(secretIngredients)
+//    }
+//                                            we now change the above from "fileprivate" to "internal"
+    
+//    When the code is executed, the project successfully compiles without any error.
+//    Recall that when the default implicit access-level modifier isn’t explicitly declared, it is internal.
+//    You can remove the internal access-level modifier on the readSecretIngredients to make your code more succinct and less wordy:
+//        internal func readSecretIngredients() {
+        func readSecretIngredients() {
+            print("Secret Ingredients")
+            print(secretIngredients)
+        }
 }
 
 //Next, below the SecretFood declaration and in the same source file, you create a Chef class.
@@ -115,104 +86,3 @@ class SecretFood {
 
  //in general your code is more organized with a class declaration per class
 
- 
-class Customer {
-    
-}
-
-class PeanutAllergyCustomer: Customer {
-    let dishesToAvoid = [
-        "Dish7",
-        "Dish8",
-    ]
-    func executeEmergencyProcedure() {
-        print("Call 911")
-    }
-}
-
-var customers: [Customer] = []
-for index in 0 ..< 5 {
-    let randomNumber = Int.random(in: 0...1)
-    let customer: Customer
-    if randomNumber == 0 {
-        customer = Customer()
-    }else {
-        customer = PeanutAllergyCustomer()
-    }
-    customers.append(customer)
-
-}
-
-for index in 0 ..< 5 {
-    
-    if let customer: PeanutAllergyCustomer = customers[index] as? PeanutAllergyCustomer {
-        print("customer \(index) can't eat \(customer.dishesToAvoid)")
-    }else {
-        print("enjoy your food")
-    }
-}
-
-class Animal {
-    func Sound(){
-        print("Animal Screams")
-    }
-}
-
-
-
-class Lion: Animal {
-    override func Sound() {
-        print("Roarrr!!!")
-    }
-}
-
-var newLion: Animal = Lion()
-newLion.Sound()
-
-
-class Dish {
-//    private var myName: String// cannot override properties in swift
-    let ingredients: String
-    let name: String
-    
-    init(name: String, ingredients: String){
-        self.ingredients = ingredients
-        self.name = name
-    }
-    
-    func printInfo() {
-        print("\(name) \(ingredients)")
-    }
-    
-}
-
-final class AppetizerDish: Dish {
-    
-    override func printInfo(){
-        print("Appetizer")
-        super.printInfo()
-        
-    }
-}
-
-final class MainDish: Dish {
-    
-}
-
-for index in 1 ..< 5{
-    let randomNumber: Int = Int.random(in: 0...1)
-    let dish: Dish
-    if randomNumber == 0 {
-        dish = AppetizerDish(name: "Margherita", ingredients: "Tomato Sauce")
-    }else {
-        dish = MainDish(name: "Spaghetti", ingredients: "Tomato Sauce")
-    }
-    
-    if let appetizerDish: AppetizerDish = dish as? AppetizerDish {
-        appetizerDish.printInfo()
-    }
-    
-    if dish is MainDish {
-        print("Main Dish!")
-    }
-}
