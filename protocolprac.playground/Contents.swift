@@ -35,22 +35,22 @@ protocol ExcellentChef{
 //This has the equivalent instruction of making the ClassName class inherit the ProtocolName protocol.
 
 
-class Person: GoodChef, GreatChef {
-    func cookGreatFood() {
-        <#code#>
-    }
-    //In the code above, the Person class adopts and conforms to the second protocol, GreatChef.
-    func cookGoodFood() {
-        <#code#>
-    }
-}
-
-//extension is basically adding code to an existing class rather than modifying it(helps follow the solid principle)
-extension Person: ExcellentChef {
-    func cookExcellentFood() {
-        <#code#>
-    }
-}
+//class Person: GoodChef, GreatChef {
+//    func cookGreatFood() {
+//        <#code#>
+//    }
+//    //In the code above, the Person class adopts and conforms to the second protocol, GreatChef.
+//    func cookGoodFood() {
+//        <#code#>
+//    }
+//}
+//
+////extension is basically adding code to an existing class rather than modifying it(helps follow the solid principle)
+//extension Person: ExcellentChef {
+//    func cookExcellentFood() {
+//        <#code#>
+//    }
+//}
 
 //An extension block is declared that makes Person adopt and conform to the ExcellentChef protocol.
 //As a rule of thumb, use an extension for each protocol adoption and conformance. This keeps protocol-related code organized in an extension block.
@@ -72,26 +72,90 @@ extension Person: ExcellentChef {
 //Another thing you can do with a protocol is to create a protocol that inherits other protocols.
 //Instead of inheriting each individual protocol, you can have a protocol that encompasses the individual protocol requirements.
 //By inheriting GoodChef, GreatChef, and ExcellentChef with a new protocol called BlackBeltChef, the code reads:
-protocol BlackBeltChef: GoodChef, GreatChef, ExcellentChef {
-    func cookBlackBeltFood()
+//protocol BlackBeltChef: GoodChef, GreatChef, ExcellentChef {
+//    func cookBlackBeltFood()
+//}
+//
+//class Individual: BlackBeltChef {
+//    func cookBlackBeltFood() {
+//        <#code#>
+//    }
+//    
+//    func cookGoodFood() {
+//        <#code#>
+//    }
+//    
+//    func cookGreatFood() {
+//        <#code#>
+//    }
+//    
+//    func cookExcellentFood() {
+//        <#code#>
+//    }
+//    
+//    
+//}
+
+protocol Dish {
+    var name: String {get}
+    var preparationMinutes: Int {get set}
+    
+    func prepare()
+    func plate(artisticLevel: Int)
 }
 
-class Individual: BlackBeltChef {
-    func cookBlackBeltFood() {
-        <#code#>
+class MainDish: Dish{
+    let name: String
+    var preparationMinutes: Int
+    init (name: String, preparationMinutes: Int){
+        self.name = name
+        self.preparationMinutes = preparationMinutes
     }
     
-    func cookGoodFood() {
-        <#code#>
+    func prepare(){
+        print("Preparing \(name) for \(preparationMinutes) minutes")
     }
     
-    func cookGreatFood() {
-        <#code#>
+    func plate(artisticLevel: Int){
+        print("Plating artistic Level: \(artisticLevel)")
     }
-    
-    func cookExcellentFood() {
-        <#code#>
-    }
-    
     
 }
+
+var ourDish = MainDish(name: "Super Spaghetti", preparationMinutes: 35)
+ourDish.prepare()
+ourDish.plate(artisticLevel: 10)
+
+protocol Driver {
+    var name: String {get}
+    func driveToDestination(_ destination: String, with food: String)
+}
+
+class DeliveryDriver: Driver {
+    let name: String
+    init(name: String){
+        self.name = name
+    }
+    func driveToDestination(_ destination: String, with food: String){
+        print("\(name) is driving to \(destination) to deliver \(food)")
+    }
+}
+
+class LittleLemon {
+    var deliveryDriver: Driver?
+    init(){}
+    func deliverFood(_ food: String,to destination: String){
+        if let deliveryDriver = deliveryDriver {
+            deliveryDriver.driveToDestination(destination, with: food)
+        } else {
+            print("no delivery driver")
+        }
+    }
+}
+
+let bob = DeliveryDriver(name: "Bob")
+let littlelemon = LittleLemon()
+littlelemon.deliverFood("Super Spaghetti", to: "1 Spaghetti Lane")
+littlelemon.deliveryDriver = bob
+littlelemon.deliverFood("Super Spaghetti", to: "1 Spaghetti Lane")
+
