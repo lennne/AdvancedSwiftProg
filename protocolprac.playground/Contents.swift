@@ -380,3 +380,90 @@ func priceConversion(originalPrices: [Int], conversionClosure: (_ price: Int) ->
 //        return value * 2
 // }
 priceConversion(originalPrices: originalPrices, conversionClosure: {$0 * 2})
+
+// higher order functions that swift provides for working with collections
+//map to transform each item in the collection into a different one. Filter to remove certain elements from an array for a given condition.
+//Reduce to return a single accumulated value using all the values from the array.
+//These functions use closures to enable you to pass on functionality and describe how the data should be transformed.
+
+//MAPPING FUNCTIONALITY
+// The map function is very convenient in this scenario.
+// It can take a closure that transforms each element of an array to the string, producing a new array containing numbers in string format.
+let numbersArray: [Int] = [1, 2,3,4,5,6]
+let numbersAsStrings = numbersArray.map { (aNumber) -> String in
+        return String(aNumber)
+}
+
+print(numbersAsStrings)
+
+//short hand version using shorthand argument names
+// let numbersAsStrings = numbersArray.map { String $0 }
+
+//FILTER FUNCTIONALITY
+// The filter function is best used when you only need to do something with the elements in an array that pass a certain condition.
+// The closure of the filter method determines if an object will be added or left out of the resulting array by checking the condition in this case if
+// a number is greater than 4
+let onlySmallNumbers = numbersArray.filter{ (aNumber) -> Bool in
+    return aNumber > 4
+}
+print(onlySmallNumbers)
+
+let maybeSmall = numbersArray.filter{ $0 > 3 }
+print(maybeSmall)
+
+// reduce functionality allows you to define and use a variable for some particular purpose through the whole iteration process,
+// whether you want to sum up values, concatenate strings, add values etc
+let totalValueFrom4 = numbersArray.reduce(0){ results, current -> Int in
+        return results + current
+}
+
+// MAP, FILTER AND REDUCE EXAMPLES
+// MAP
+struct User {
+    let id: Int
+    let name: String
+}
+
+let users = [
+    User(id: 1, name: "John"),
+    User(id: 2, name: "Tom")
+]
+
+// Given a struct representing user information and a constant holding an array of user objects,
+// it is possible to convert the user's array to an array containing users` ids.
+// Basically what we mean by conver to another array, is we're taking the existing elements and converting each to something else,
+// and then the now new values come together to form an array
+let userIds = users.map{ user in
+    return user.id
+}
+// so in the above code what we get is an array of Ids
+print(userIds)
+
+// The shorter version of the map closure would be using a $0 default parameter representing the user instead of
+// defining an explicit user constant in closure as follows:
+ let shortUsersIds = users.map { $0.id }
+
+// COMPACT MAP
+// compactMap is a special type of map that discards any nil values.
+// It is very useful if an object conversion function could produce nil.  In this case, however, you only want the non-nil values in the resulting array.
+
+let urlsAsStrings = ["https://www.google.com", "not a valid url"]
+let urlsOrNil = urlsAsStrings.map { URL(string: $0) }
+let urls = urlsAsStrings.compactMap { URL(string: $0) }
+print("mixed \(urlsOrNil) and valid urls \(urls)")
+
+
+// FLAT MAP
+struct Speaker {
+    let id: Int
+    let name: String
+    let languages: [String]
+}
+
+let speakers = [
+    Speaker(id: 1, name: "John", languages: ["English", "German"]),
+    Speaker(id: 2, name: "Tom", languages: ["Russian", "Spanish"])
+]
+
+let allLanguages = speakers.flatMap{$0.languages}
+print(allLanguages)
