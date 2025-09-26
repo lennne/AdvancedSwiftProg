@@ -467,3 +467,42 @@ let speakers = [
 
 let allLanguages = speakers.flatMap{$0.languages}
 print(allLanguages)
+
+
+//EXERCISE WITHOUT SHORTHAND
+struct Order {
+    let price:Int
+    let location: String
+}
+//
+//func totalRevenueOf(orders: [Order], location: String) -> Int {
+//    let ordersAtLocation = orders.filter{ current in
+//        return location == current.location
+//    }
+//    
+//    let total = ordersAtLocation.reduce(into: 0){ oldValue, current in
+//        oldValue = oldValue + current.price
+//    }
+//    return total
+//}
+//
+let orders = [
+    Order(price: 24, location: "New York"),
+    Order(price: 37, location: "San Francisco"),
+    Order(price: 101, location: "New York"),
+]
+//
+//let result = totalRevenueOf(orders: orders, location: "New York")
+//print("the total value is \(result)")
+
+func totalRevenueOf(orders: [Order], location: String) -> Int {
+    let ordersAtLocation = orders.filter{$0.location == location}
+    print(ordersAtLocation)
+    let orderPrices = ordersAtLocation.map{$0.price}
+    print(orderPrices)
+    let totalRevenueOf = orderPrices.reduce(0){$0 + $1}
+    return totalRevenueOf
+}
+
+
+print(totalRevenueOf(orders: orders, location: "New York"))
