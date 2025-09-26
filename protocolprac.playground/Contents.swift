@@ -361,3 +361,22 @@ while m > 0 {
 //        return n + output(n: n - 1) // step 2 and step 3
 //    }
 //}
+
+// FUNCTIONAL PROGRAMMING
+let originalPrices = [2, 5, 6, 12, 5, 20]
+
+func priceConversion(originalPrices: [Int], conversionClosure: (_ price: Int) -> Int) -> [Int] {
+    var convertedPrices = [Int]()
+    for originalPrice in originalPrices {
+        let convertedPrice = conversionClosure(originalPrice)
+        convertedPrices.append(convertedPrice)
+    }
+    
+    return convertedPrices
+}
+
+// $0 → refers to the first argument passed into the closure.
+// { (value: Int) -> Int in
+//        return value * 2
+// }
+priceConversion(originalPrices: originalPrices, conversionClosure: {$0 * 2})
