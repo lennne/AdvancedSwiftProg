@@ -506,3 +506,47 @@ func totalRevenueOf(orders: [Order], location: String) -> Int {
 
 
 print(totalRevenueOf(orders: orders, location: "New York"))
+
+
+//FOR EACH
+
+//forEach is a dedicated method that loops over each element in an array or dictionary and does something with it.
+
+//The forEach function in its implementation uses for loops to iterate over elements, so why should you
+//use it instead of the for-in  loop you already know?
+//The answer is functional programming. If you do software development in a functional way, you will likely chain multiple
+//function calls together instead of assigning each result of a function call to a new variable
+//just to call another function on it.
+
+//In that case, instead of saving the results in variables to use them in for loops, you can add a forEach function
+//to a chain to reduce the amount of code needed to achieve the same result.
+
+//To summarize, when you have multiple function calls chained and you need to iterate over elements at some point,
+//instead of saving results to several variables and writing for-in loops, you can add
+//forEach to the chain of functions. This will simplify your code.
+
+//However, unlike the for-in loop, you can’t skip elements while using the forEach function – it has to iterate
+//over each of the elements. This might be a disadvantage in some situations where
+//the performance of an algorithm is a priority.
+
+
+
+//Consider the following code using a for-in loop:
+let donationsInformation  = ["John" : 56, "Tom": 15, "Charlie": 104]
+let donationsTexts = donationsInformation.map { "\($0.key) has donated \($0.value) so far"}
+for text in donationsTexts {
+    print(text)
+}
+
+//The initial donationsInformation constant holds the amounts that people have donated so far referenced by their names.
+
+//Firstly, the donationsInformation dictionary is converted into an array holding the texts that will be displayed to the user.
+//Afterward, a for-in loop is used to iterate over each text and output it to the screen. The drawback here is that the
+//additional donationsTexts constant has to be defined to be used in the for-in loop.
+
+//The code could be optimized using functional programming and the forEach function instead of a for-in loop.
+
+//Consider the following:
+// let donationsInformation = ["John": 56, "Tom": 15, "Charlie": 104]
+// donationsInformation.map { "\($0.key) has donated \($0.value) so far" }
+//    .forEach { print($0) }
