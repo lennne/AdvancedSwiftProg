@@ -159,3 +159,64 @@ littlelemon.deliverFood("Super Spaghetti", to: "1 Spaghetti Lane")
 littlelemon.deliveryDriver = bob
 littlelemon.deliverFood("Super Spaghetti", to: "1 Spaghetti Lane")
 
+//ERROR HANDLING
+enum BadError: Error{
+    case NumberIsTooLarge
+    case NumberIsTooSmall
+}
+func throwAnError() throws {
+    throw BadError.NumberIsTooSmall
+}
+
+do{
+    try throwAnError()
+}catch BadError.NumberIsTooLarge{
+    print("Number shouldn't be too large")
+}catch{
+    print("the error is \(error)")
+}
+
+//Error handling approaches
+// try! and try?
+// try! lets you call a throwable function outside of the do-catch statement, it is used when you're sure the particular function will not throw errors, not advised to use try! in production
+// whilst try? the try? expression simplifies error handling when you want to handle all errors in the same way.
+
+//try!
+//do {
+//    let image = try! loadImageThrowableFunction("image.png")
+//}
+//catch {}
+
+
+//try? since try? returns nil or the expected value, you'll need to perform additional checks(if statements) to handle nil values
+//do {
+//let image = try? loadImageThrowableFunction("image.png")
+//}
+//catch{}
+
+class Calculator {
+    func division(x: Double, y: Double) throws -> Double  {
+        if y == 0 {
+            throw CalculatorError.divisionByZero
+        }
+        return x / y
+    }
+}
+
+let calculator = Calculator()
+do {
+ 
+    let successfulResult = try calculator.division(x: 10, y: 5)
+    print(successfulResult)
+    
+    let invalidResult = try calculator.division(x: 10, y: 0)
+    print(invalidResult)
+
+} catch CalculatorError.divisionByZero {
+    print("Cannot divide by zero")
+}
+enum CalculatorError: Error {
+    case divisionByZero
+}
+
+
