@@ -287,3 +287,77 @@ printTheNumbers()
 //} catch {
 //    // Handle errors here
 //}
+
+// RECURSION
+
+@MainActor class Counter {
+    var count: Int = 0
+    
+     func hello(_ count: inout Int) {
+        print("hello \(count)")
+        count += 1
+        if count < 10 {
+            hello(&count)
+        }
+    }
+}
+
+let myCounter = Counter()
+var start: Int = 0
+myCounter.hello(&start)
+
+//Output n numbers to console
+//Suppose you have to output numbers from n to 1 in the console.
+
+
+var n = 6
+while n > 0 {
+    print(n)
+    n-=1
+}
+
+// recursive way
+func output(n: Int) {
+    if (n==0){
+        return
+    } else {
+        print(n)
+        output(n: n-1)
+    }
+}
+
+output(n: 6)
+
+
+// Another common use case is finding a sum of all numbers in some range.
+
+//Suppose the range, in this case, is from 1 to n.
+
+var m = 6
+var sum = 0
+
+while m > 0 {
+    sum += m
+    m -= 1
+}
+//
+//Implementation becomes a bit more complex with one more variable defined, namely sum. Now instead of a print statement inside the while loop, n is now added to the sum each time.
+//
+//Let’s now discuss the process of making the implementation recursive using the three-step process again:
+//
+//Base case: all the numbers from 1 to n have to be summed. Meaning that n has to be reduced by 1 each time until it is equal to 1, after that the algorithm has to stop. In other words, the algorithm must stop when n becomes 0, which will be the base case.
+//
+//Perform work to reach the base case: in this instance, the work entails summing up the numbers.
+//
+//Repeat the process: each time creating the sum with a call to the same function reducing n by 1.
+//
+//The implementation of the algorithm becomes:
+
+//func output(n: Int) -> Int {
+//    if(n==0) { // step 1 base case
+//        return 0
+//    }
+//    else {
+//        return n + output(n: n - 1) // step 2 and step 3
+//    }
+//}
