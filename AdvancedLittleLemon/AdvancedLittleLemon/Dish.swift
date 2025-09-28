@@ -29,6 +29,10 @@ final class AppetizerDish: Dish {
     }
 }
 
-final class MainDish: Dish {
-    
+struct Recipe{
+    var duration: Int = 0
+    mutating func incrementTimer() -> Int{
+        duration = duration + 1
+        return duration
+    }
 }
